@@ -6,4 +6,9 @@
 body {
   margin: 0;
   font-family: myGoogleFont !important;
+  /* background: url("./graphics/pdf.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.9; */
 }
