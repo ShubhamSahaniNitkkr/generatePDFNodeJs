@@ -19,63 +19,67 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="card shadow-sm p-1 mb-5 bg-white rounded">
-          <div className="card-body">
-            <h5 className="card-title"></h5>
+        <div className="container-fluid mt-5">
+          <div className="col-md-6 mx-auto">
+            <div className="card shadow-sm p-1 mb-5 bg-white rounded">
+              <div className="card-body">
+                <h5 className="card-title"></h5>
 
-            <form onSubmit={onSubmit}>
-              <div className="form-group">
-                <label htmlFor="nameField">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="nameField"
-                  name="name"
-                  value={name}
-                  onChange={this.onChange}
-                  required
-                />
-              </div>
+                <form onSubmit={this.onSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="nameField">Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="nameField"
+                      name="name"
+                      value={name}
+                      onChange={this.onChange}
+                      required
+                    />
+                  </div>
 
-              <div className="form-group">
-                <label htmlFor="recieptField">Reciept id</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="recieptField"
-                  name="recieptId"
-                  value={recieptId}
-                  onChange={this.onChange}
-                  required
-                />
-              </div>
+                  <div className="form-group">
+                    <label htmlFor="recieptField">Reciept id</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="recieptField"
+                      name="recieptId"
+                      value={recieptId}
+                      onChange={this.onChange}
+                      required
+                    />
+                  </div>
 
-              <div className="form-group">
-                <label htmlFor="price1Field">Price 1</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="price1Field"
-                  name="price1"
-                  value={price1}
-                  onChange={this.onChange}
-                  required
-                />
-              </div>
+                  <div className="form-group">
+                    <label htmlFor="price1Field">Price 1</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="price1Field"
+                      name="price1"
+                      value={price1}
+                      onChange={this.onChange}
+                      required
+                    />
+                  </div>
 
-              <div className="form-group">
-                <label htmlFor="price2Field">Price 2</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="price2Field"
-                  name="price2"
-                  value={price2}
-                  onChange={this.onChange}
-                  required
-                />
+                  <div className="form-group">
+                    <label htmlFor="price2Field">Price 2</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="price2Field"
+                      name="price2"
+                      value={price2}
+                      onChange={this.onChange}
+                      required
+                    />
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
