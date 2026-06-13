@@ -11,19 +11,23 @@ export class Form extends Component {
   };
 
   onChange = ({ target: { value, name } }) => this.setState({ [name]: value });
-  onSubmit = () => {
+
+  onSubmit = e => {
+    e.preventDefault();
     Axios.post("/create-pdf", this.state)
-      .then(() => Axios.get("fetch-pdf", { responseType: "blob" }))
+      .then(() => Axios.get("/fetch-pdf", { responseType: "blob" }))
       .then(res => {
         const pdfBlob = new Blob([res.data], { type: "application/pdf" });
         saveAs(pdfBlob, "newPDFInvoice.pdf");
-      });
+      })
+      .catch(err => console.error("PDF generation failed", err));
   };
+
   render() {
     const { name, recieptId, price1, price2 } = this.state;
 
     return (
-      <div className="container-fluid mt-5">
+      <div className="container-fluid mt-5 pdf-form-container">
         <div className="col-md-6 mx-auto">
           <div className="card shadow-sm p-1 mb-5 bg-white rounded">
             <div className="card-body">

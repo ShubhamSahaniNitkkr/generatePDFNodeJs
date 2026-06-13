@@ -1,23 +1,29 @@
 {
-  "name": "server",
+  "name": "generate-pdf-nodejs",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Dynamic PDF invoice generator with React UI",
+  "main": "server.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
     "ui": "npm start --prefix ui",
     "uiinstall": "npm install --prefix ui",
+    "build:ui": "npm run build --prefix ui",
+    "build": "npm run uiinstall && npm run build:ui",
+    "demo": "DEMO_MODE=true SERVE_UI=true node server.js",
     "dev": "concurrently \"npm run server\" \"npm run ui\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "html-pdf": "^2.2.0",
     "nodemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.1"
   }
 }
