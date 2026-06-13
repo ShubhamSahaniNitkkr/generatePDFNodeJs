@@ -1,5 +1,16 @@
 module.exports = ({ name, recieptId, price1, price2 }) => {
   const today = new Date();
+  const dateStr = today.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+  const p1 = parseFloat(price1) || 0;
+  const p2 = parseFloat(price2) || 0;
+  const total = (p1 + p2).toFixed(2);
+  const fmt = n => `$${Number(n).toFixed(2)}`;
+  const invoiceId = recieptId || "000123";
+
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -259,19 +270,17 @@ module.exports = ({ name, recieptId, price1, price2 }) => {
           <table id="meta">
             <tr>
               <td class="meta-head">Invoice #</td>
-              <td><textarea>000123</textarea></td>
+              <td><textarea>${invoiceId}</textarea></td>
             </tr>
             <tr>
               <td class="meta-head">Date</td>
               <td>
-                <textarea id="date">
-  ${(today.getDate(), today.getDay(), today.getFullYear())}</textarea
-                >
+                <textarea id="date">${dateStr}</textarea>
               </td>
             </tr>
             <tr>
               <td class="meta-head">Amount Due</td>
-              <td><div class="due">$875.00</div></td>
+              <td><div class="due">${fmt(total)}</div></td>
             </tr>
           </table>
         </div>
@@ -296,9 +305,9 @@ module.exports = ({ name, recieptId, price1, price2 }) => {
   Monthly web updates for http://widgetcorp.com (Nov. 1 - Nov. 30, 2009)</textarea
               >
             </td>
-            <td><textarea class="cost">$650.00</textarea></td>
+            <td><textarea class="cost">${fmt(p1)}</textarea></td>
             <td><textarea class="qty">1</textarea></td>
-            <td><span class="price">$650.00</span></td>
+            <td><span class="price">${fmt(p1)}</span></td>
           </tr>
   
           <tr class="item-row">
@@ -313,9 +322,9 @@ module.exports = ({ name, recieptId, price1, price2 }) => {
   Yearly renewals of SSL certificates on main domain and several subdomains</textarea
               >
             </td>
-            <td><textarea class="cost">$75.00</textarea></td>
-            <td><textarea class="qty">3</textarea></td>
-            <td><span class="price">$225.00</span></td>
+            <td><textarea class="cost">${fmt(p2)}</textarea></td>
+            <td><textarea class="qty">1</textarea></td>
+            <td><span class="price">${fmt(p2)}</span></td>
           </tr>
   
           <tr id="hiderow">
@@ -327,12 +336,12 @@ module.exports = ({ name, recieptId, price1, price2 }) => {
           <tr>
             <td colspan="2" class="blank"></td>
             <td colspan="2" class="total-line">Subtotal</td>
-            <td class="total-value"><div id="subtotal">$875.00</div></td>
+            <td class="total-value"><div id="subtotal">${fmt(total)}</div></td>
           </tr>
           <tr>
             <td colspan="2" class="blank"></td>
             <td colspan="2" class="total-line">Total</td>
-            <td class="total-value"><div id="total">$875.00</div></td>
+            <td class="total-value"><div id="total">${fmt(total)}</div></td>
           </tr>
           <tr>
             <td colspan="2" class="blank"></td>
@@ -343,7 +352,7 @@ module.exports = ({ name, recieptId, price1, price2 }) => {
           <tr>
             <td colspan="2" class="blank"></td>
             <td colspan="2" class="total-line balance">Balance Due</td>
-            <td class="total-value balance"><div class="due">$875.00</div></td>
+            <td class="total-value balance"><div class="due">${fmt(total)}</div></td>
           </tr>
         </table>
   

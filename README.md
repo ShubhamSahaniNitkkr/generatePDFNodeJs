@@ -20,6 +20,7 @@ Generate PDF invoices from HTML form input using Node and a React UI.
 - Node.js
 - Express
 - html-pdf
+- puppeteer
 - React
 
 ## How to Run Locally

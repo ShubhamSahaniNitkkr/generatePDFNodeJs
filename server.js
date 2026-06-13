@@ -3,49 +3,61 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const fs = require("fs");
+const puppeteer = require("puppeteer");
 const PDF_Template = require("./sample_doc/index");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
-const isDemoMode = () => process.env.DEMO_MODE === "true";
-
-let pdf;
-try {
-  pdf = require("html-pdf");
-} catch (e) {
-  console.log("html-pdf not available");
-}
+const PDF_PATH = path.join(__dirname, "Invoice.pdf");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/api/status", (req, res) => {
-  res.json({ demoMode: isDemoMode(), pdfEngine: !!pdf });
+  res.json({ pdfEngine: true });
 });
 
-app.post("/create-pdf", (req, res) => {
+async function generatePdf(html, outputPath) {
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+  });
+
+  try {
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: "networkidle0" });
+    await page.pdf({
+      path: outputPath,
+      format: "A4",
+      printBackground: true,
+      margin: { top: "20px", right: "20px", bottom: "20px", left: "20px" }
+    });
+  } finally {
+    await browser.close();
+  }
+}
+
+app.post("/create-pdf", async (req, res) => {
   const html = PDF_Template(req.body);
 
-  if (isDemoMode() || !pdf) {
-    fs.writeFileSync(path.join(__dirname, "Invoice.pdf"), html);
-    return res.json({ success: true, demoMode: true });
-  }
-
-  pdf.create(html, {}).toFile(path.join(__dirname, "Invoice.pdf"), err => {
-    if (err) {
-      return res.status(500).json({ error: "PDF generation failed" });
-    }
+  try {
+    await generatePdf(html, PDF_PATH);
     res.json({ success: true });
-  });
+  } catch (err) {
+    console.error("PDF generation failed:", err.message);
+    res.status(500).json({ error: "PDF generation failed" });
+  }
 });
 
 app.get("/fetch-pdf", (req, res) => {
-  const filePath = path.join(__dirname, "Invoice.pdf");
-  if (!fs.existsSync(filePath)) {
+  if (!fs.existsSync(PDF_PATH)) {
     return res.status(404).json({ error: "PDF not found" });
   }
-  res.sendFile(filePath);
+
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", 'attachment; filename="Invoice.pdf"');
+  res.sendFile(PDF_PATH);
 });
 
 if (process.env.SERVE_UI === "true") {
@@ -57,7 +69,4 @@ if (process.env.SERVE_UI === "true") {
 
 app.listen(PORT, () => {
   console.log(`Listening on PORT ${PORT}`);
-  if (isDemoMode()) {
-    console.log("DEMO_MODE: PDF saved as HTML fallback if html-pdf unavailable");
-  }
 });
