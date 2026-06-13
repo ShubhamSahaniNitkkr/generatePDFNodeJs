@@ -1,4 +1,4 @@
-function formatInvoiceDate(dateStr) {
+export function formatInvoiceDate(dateStr) {
   const d = dateStr ? new Date(`${dateStr}T12:00:00`) : new Date();
   if (Number.isNaN(d.getTime())) return formatInvoiceDate(null);
   const day = String(d.getDate()).padStart(2, "0");
@@ -6,13 +6,13 @@ function formatInvoiceDate(dateStr) {
   return `${day} ${month}, ${d.getFullYear()}`;
 }
 
-function calcTotal(quantity, price) {
+export function calcTotal(quantity, price) {
   const q = parseFloat(quantity) || 0;
   const p = parseFloat(price) || 0;
   return (q * p).toFixed(0);
 }
 
-function buildInvoiceData(raw) {
+export function buildInvoiceData(raw) {
   const quantity = raw.quantity || "1";
   const price = raw.price || "0";
   const total = calcTotal(quantity, price);
@@ -38,7 +38,7 @@ function buildInvoiceData(raw) {
   };
 }
 
-module.exports = raw => {
+const invoiceTemplate = raw => {
   const d = buildInvoiceData(raw);
   const logoBlock = d.logo
     ? `<div class="logo-wrap"><img class="logo" src="${d.logo}" alt="Logo" /></div>`
@@ -197,3 +197,5 @@ module.exports = raw => {
   </body>
 </html>`;
 };
+
+export default invoiceTemplate;

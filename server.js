@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 8000;
 const PDF_PATH = path.join(__dirname, "Invoice.pdf");
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false, limit: "5mb" }));
+app.use(bodyParser.json({ limit: "5mb" }));
 
 app.get("/api/status", (req, res) => {
   res.json({ pdfEngine: true });
@@ -61,9 +61,23 @@ app.get("/fetch-pdf", (req, res) => {
 });
 
 if (process.env.SERVE_UI === "true") {
-  app.use(express.static(path.join(__dirname, "ui/build")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "ui/build", "index.html"));
+  const uiBuild = path.join(__dirname, "ui/build");
+  const pagesBase = "/projects/generatePDFNodeJs";
+
+  // Support both local builds (/) and GitHub Pages builds (/projects/...)
+  app.use(pagesBase, express.static(uiBuild));
+  app.use(express.static(uiBuild));
+
+  app.get("/", (_req, res) => res.redirect(`${pagesBase}/`));
+
+  app.get(`${pagesBase}/*`, (req, res, next) => {
+    if (path.extname(req.path)) return next();
+    res.sendFile(path.join(uiBuild, "index.html"));
+  });
+
+  app.get("*", (req, res, next) => {
+    if (path.extname(req.path)) return next();
+    res.sendFile(path.join(uiBuild, "index.html"));
   });
 }
 

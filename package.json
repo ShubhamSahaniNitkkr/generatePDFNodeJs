@@ -13,7 +13,8 @@
     "uiinstall": "npm install --prefix ui",
     "build:ui": "npm run build --prefix ui",
     "build": "npm run uiinstall && npm run build:ui",
-    "demo": "SERVE_UI=true node server.js",
+    "build:ui-local": "npm run build --prefix ui",
+    "demo": "npm run build:ui-local && SERVE_UI=true node server.js",
     "dev": "concurrently \"npm run server\" \"npm run ui\""
   },
   "dependencies": {

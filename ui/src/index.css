@@ -1,20 +1,355 @@
 *, *::before, *::after { box-sizing: border-box; }
-img { max-width: 100%; height: auto; }
-body { overflow-x: hidden; }
-@media (max-width: 768px) { .container { padding: 0 12px; } }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #f0f2f5;
+  color: #1a1a2e;
+  overflow-x: hidden;
 }
 
-.pdf-form-container {
-  padding-top: 4rem;
+img { max-width: 100%; height: auto; }
+
+/* Header */
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
 }
 
-@media (max-width: 768px) {
-  .pdf-form-container .col-md-6 {
-    max-width: 95%;
-    padding: 0 0.5rem;
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.brand i { font-size: 1.4rem; }
+
+.header-tag {
+  font-size: 0.8rem;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* Layout */
+.bill-app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.bill-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Form panel */
+.form-panel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 24px 24px 0;
+}
+
+.panel-header h1 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.panel-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.bill-form {
+  padding: 20px 24px 28px;
+}
+
+.form-section {
+  border: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.form-section legend {
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #475569;
+  margin-bottom: 12px;
+  padding: 0;
+}
+
+.field {
+  margin-bottom: 12px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 5px;
+}
+
+.field-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #1a1a2e;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.field-input:disabled {
+  background: #f8fafc;
+  opacity: 0.7;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field-row-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.field-row .field,
+.field-row-3 .field {
+  margin-bottom: 0;
+}
+
+.total-display {
+  padding: 10px 12px;
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #15803d;
+}
+
+/* Logo upload */
+.logo-upload {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.logo-preview {
+  width: 120px;
+  height: 64px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #f8fafc;
+  flex-shrink: 0;
+}
+
+.logo-preview img {
+  max-height: 56px;
+  max-width: 110px;
+  object-fit: contain;
+}
+
+.logo-placeholder {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.logo-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  width: 100%;
+  justify-content: center;
+  background: #2563eb;
+  color: #fff;
+  padding: 14px;
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1.5px solid #e2e8f0;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+/* Alert */
+.alert-error {
+  margin: 16px 24px 0;
+  padding: 10px 14px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 0.88rem;
+}
+
+/* Preview panel */
+.preview-panel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  position: sticky;
+  top: 72px;
+}
+
+.preview-label {
+  padding: 14px 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.preview-frame-wrap {
+  overflow: auto;
+  max-height: calc(100vh - 120px);
+  background: #e2e8f0;
+  padding: 16px;
+}
+
+.preview-frame {
+  width: 100%;
+  min-height: 700px;
+  border: none;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .bill-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-panel {
+    position: static;
+  }
+
+  .preview-frame-wrap {
+    max-height: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  .bill-app { padding: 16px 12px 32px; }
+
+  .field-row,
+  .field-row-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .field-row .field,
+  .field-row-3 .field {
+    margin-bottom: 12px;
+  }
+
+  .header-tag { display: none; }
+
+  .panel-header h1 { font-size: 1.25rem; }
+
+  .bill-form { padding: 16px; }
+
+  .logo-upload {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
