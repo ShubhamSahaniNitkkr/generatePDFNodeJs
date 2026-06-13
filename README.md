@@ -1,8 +1,8 @@
 # PDF Invoice Generator
 
 > Generate PDF invoices from HTML form input using Node and a React UI.
+<img width="1" height="1167" alt="image" src="https://github.com/user-attachments/assets/479c2e58-1a7a-4ac9-a419-542f06f39ea9" />
 
-![Screenshot](./screenshot.png)
 > Add `screenshot.png` in project root for preview.
 
 ## Purpose
@@ -31,7 +31,7 @@ npm install && npm run uiinstall && npm run demo
 
 ## Live Demo
 
-[https://shubhamsahaniNitkkr.github.io/generatePDFNodeJs/](https://shubhamsahaniNitkkr.github.io/generatePDFNodeJs/)
+https://generatepdfnodejs.onrender.com
 
 
 ## Performance & UI
